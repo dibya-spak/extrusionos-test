@@ -43,14 +43,18 @@ describe('Testing assets & equipments modal',()=>
         cy.get('input[value="Update Equipment Property"]').click()
         // cy.get('div#toast-container').should('have.text',"Equipment Property was successfully updated.")
     })
-    it.skip('verify user can add all the equipments to an asset',() =>
+    it.only('verify user can add an equipments to an asset',() =>
      {
         cy.visit('/inventory_assets')
         cy.log('select an asset in the list')
         cy.get('table>tbody>tr').contains('testing Sheet').click()
         cy.get('span.custom-dropdown').click()
-        span>ul>li
-    })
+        cy.get('input[type="search"]').type('Calander')
+        cy.get('input[type="search"]').type('{enter}')
+        cy.get('#equipment_name').should('have.text','New Calander').clear().type('automatic added')
+        cy.get('input[type="submit"]').click()
+        })
+    
     it('verify the user can delete an asset',() =>
      {
         cy.visit('/inventory_assets')
