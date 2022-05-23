@@ -13,7 +13,7 @@ describe('Testing Datasource modal(create/edit/delete datasource)',()=>
         cy.get('#addDataSourceAction').click()
         cy.contains('Add Camea data source').click()
         cy.log('fill all the input fields')
-        cy.get('#camea_data_source_data_source_attributes_name').clear().type('camea testing datasource')
+        cy.get('#camea_data_source_data_source_attributes_name').clear().type('Automate camea datasource')
         cy.get('#camea_data_source_data_source_attributes_description').clear().type('no description')
         cy.get('#camea_data_source_smb_host').clear().type('120.0.0.0')
         cy.get('#camea_data_source_smb_share').clear().type('testdata')
@@ -30,7 +30,7 @@ describe('Testing Datasource modal(create/edit/delete datasource)',()=>
     {
         cy.visit('/data_sources')
         cy.log('click datasource edit button')
-        cy.get('table>tbody>tr').contains('camea testing datasource').click()
+        cy.get('td.hover-decorate').contains('Automate camea datasource').click()
         cy.get('#camea_data_source_data_source_attributes_description').clear({force:true}).type('description updated')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Camea data source was successfully updated.")
@@ -56,9 +56,32 @@ describe('Testing Datasource modal(create/edit/delete datasource)',()=>
      {
         cy.visit('/data_sources')
         cy.log('click datasource delete button')
-        cy.get('table>tbody>tr:nth-child(1)>td>a:nth-child(2)').click()
+        cy.get('[data-title="Delete Data source Automate camea datasource"]').click({force:true})
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Camea data source was successfully destroyed.")
+    })
+    it('verify the user can add an OPC UA datasource',() =>
+    {
+       cy.visit('/data_sources')
+       cy.log('adding opc ua datasource')
+       cy.get('#addDataSourceAction').click()
+       cy.contains('Add OPC UA data source').click()
+       cy.log('fill all the input fields')
+       cy.get('#opc_ua_data_source_data_source_attributes_name').clear().type('Automate opcua datasource')
+       cy.get('#opc_ua_data_source_data_source_attributes_description').clear().type('no description')
+       cy.get('#opc_ua_data_source_uri').clear().type('opc.tcp://sheet-opcua-simulator:4840/UA')
+       cy.get('#opc_ua_data_source_collection_interval_ms').clear().type('200')
+       cy.get('input[type="submit"]').click()
+       cy.get('div#toast-container').should('have.text',"OPC UA data source was successfully created.")
+   })
+
+   it('verify the user can delete a OPC UA datasource',() =>
+     {
+        cy.visit('/data_sources')
+        cy.log('click datasource delete button')
+        cy.get('[data-title="Delete Data source Automate opcua datasource"]').click({force:true})
+        cy.contains('Confirm').click()
+        cy.get('div#toast-container').should('have.text',"OPC UA data source was successfully destroyed.")
     })
     
     afterEach(function(){

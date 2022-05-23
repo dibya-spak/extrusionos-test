@@ -48,4 +48,5 @@ describe('User Login and Logout',()=>
         cy.get('input[value="Log in"]').click()
         cy.get('div#toast-container').should('have.text',"Invalid E-Mail or password.")        
    })
+  
 })

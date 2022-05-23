@@ -24,3 +24,12 @@ const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
 module.exports = (on, config) => {
   on('task', {downloadFile})
 }
+
+module.exports = (on) => {
+  on('before:browser:launch', (browser = {}, args) => {
+    if (browser.name === 'chrome') {
+      args.push('--disable-blink-features=RootLayerScrolling')
+      return args
+    }
+  })
+}

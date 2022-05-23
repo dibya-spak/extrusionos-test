@@ -5,16 +5,23 @@ describe('Testing assets & equipments modal',()=>
         cy.adminLogIn()
         cy.wait(2000)
     })    
-    it('verify the user can add an asset',() =>
+    it.only('verify the user can add an asset',() =>
      {
         cy.contains('Settings').click()
         cy.contains('Assets & Equipment').click()
-        cy.log('add Blown Film asset')
+        cy.log('add an asset')
         cy.get('a#dropdownMenuLink').click()
-        cy.get('div>a.dropdown-item:nth-child(1)').click()
+        cy.get('div>a.dropdown-item:nth-child(2)').click()
+        cy.get('#equipment_groups_beam_index_option_1_selected_template').select('Spunbond beam')
+        //cy.get('#equipment_groups_take_offs_bf_index_option_1_selected_template').select('Take-Off')
+        //cy.get('#equipment_groups_winder_bf_index_option_1_selected_template').select('Winder (BF)')
+        //cy.get('#equipment_groups_pre_haul_offs_index_option_1_selected_template').select('Pre Haul-Off')
+        cy.get('[value="Continue"]').click()
+        cy.get('[value="Continue"]').click()
+        cy.get('#create_asset').click()
         cy.log('validating the new asset image')
         cy.get('img[src="/images/blown_film.jpg"]').should('be.visible')
-        cy.get('div#toast-container').should('have.text',"Blown Film was successfully created.")
+        cy.get('div#toast-container').should('have.text',"Asset created.")
     }) 
     it('verify the user can edit the name/description of an asset',() =>
      {
@@ -43,7 +50,7 @@ describe('Testing assets & equipments modal',()=>
         cy.get('input[value="Update Equipment Property"]').click()
         // cy.get('div#toast-container').should('have.text',"Equipment Property was successfully updated.")
     })
-    it.only('verify user can add an equipments to an asset',() =>
+    it('verify user can add an equipments to an asset',() =>
      {
         cy.visit('/inventory_assets')
         cy.log('select an asset in the list')
@@ -55,7 +62,7 @@ describe('Testing assets & equipments modal',()=>
         cy.get('input[type="submit"]').click()
         })
     
-    it('verify the user can delete an asset',() =>
+    it.skip('verify the user can delete an asset',() =>
      {
         cy.visit('/inventory_assets')
         cy.log('click delete button for an asset ')
@@ -64,7 +71,7 @@ describe('Testing assets & equipments modal',()=>
         cy.get('div#toast-container').should('have.text',"Asset was successfully destroyed.")
     })
 
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })
