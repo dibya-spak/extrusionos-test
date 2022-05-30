@@ -13,7 +13,7 @@
   "author": "dibya",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.2.0",
+    "cypress": "^9.6.0",
     "cypress-file-upload": "^4.0.7",
     "cypress-xpath": "^1.6.2",
     "mochawesome": "^6.1.1",

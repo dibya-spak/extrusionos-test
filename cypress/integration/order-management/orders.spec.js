@@ -7,7 +7,7 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
     it('verify the user can add an order',() =>
      {
         cy.log('navigate order management tab')
-        cy.get('[href="/production_orders"]').click()
+        cy.contains('Order Management').click()
         cy.log('adding an order')
         cy.get('[href="/production_orders/new"]').click()
         cy.log('fill all the input fields')
@@ -34,16 +34,19 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
        //         cy.xpath('//tr[1]/td[14]').click()
        //     }
        // })
-       cy.get('tbody>tr:nth-child(1)>td:nth-child(14)').click()
-       cy.contains('Confirm').click()
-       cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
+       cy.xpath('//tbody/tr[1]').click()
+       cy.get('#production_order_status').select('complete')
+       cy.get('#actual_range').click()
+       cy.get('div:nth-child(6)>div.ranges>ul>li').contains('Yesterday').click({force:true})
+       cy.get('[type="submit"]').click()
+       cy.get('div#toast-container').should('have.text',"Production order was successfully updated.")
    })
  
     it('verify the user can delete an order',() =>
      {
         cy.visit('/production_orders')
         cy.log('click delete button for an order')
-        cy.get('tbody>tr:nth-child(1)>td:nth-child(14)').click()
+        cy.xpath('//tbody/tr[1]/td[14]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
         // cy.xpath('//tr/td[1]').each(($el, index, $list) => {

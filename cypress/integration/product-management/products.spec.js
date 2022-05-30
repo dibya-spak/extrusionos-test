@@ -34,11 +34,36 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
        cy.contains('Melt Pressure').click()
        cy.get('button.select-threshold-properties').click()
        cy.get('table>tbody>tr>td:nth-child(6)').type('200')
-       //cy.get('#add_material_layer_container').click({force:true})
-       //cy.get('input[type="number"]:nth-child(2)').clear().type('100')
+       cy.get('[data-association="material_layer"]').click()
+       cy.xpath('(//select[@class="form-control select required"])[2]').should('not.be.empty')
+       cy.xpath('(//select[@class="form-control select required"])[3]').should('not.be.empty')
+       cy.get('input[type="number"]:nth-child(2)').clear().type('100')
        cy.get('input[type="submit"]').click()
        cy.get('div#toast-container').should('have.text',"Production specification was successfully created.")
    })
+
+   it('verify the user can copy a recipe',() =>
+   {
+      cy.visit('/product_management/products')
+      cy.get('table>tbody>tr').contains('Automate product').click({force:true})
+      cy.get('tbody>tr:nth-child(1)>td>a.copy-button').click()
+      cy.get('#recipe_comment').clear().type('recipe copied')
+      cy.get('[value="Create production specification"]').click()
+      cy.get('div#toast-container').should('have.text',"Production specification was successfully copied.")
+      cy.contains('Back').click()
+
+  })
+
+   it('verify the user can copy a product',() =>
+   {
+      cy.visit('/product_management/products')
+      cy.get('tbody>tr:nth-child(1)>td>a.copy-button').click()
+      cy.get('#product_comment').clear().type('product copied')
+      cy.get('[value="Create Product"]').click()
+      cy.get('div#toast-container').should('have.text',"Product was successfully copied.")
+      cy.contains('Back').click()
+
+  })
  
     it('verify the user can delete a product & the associated recipe',() =>
      {

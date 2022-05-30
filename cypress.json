@@ -8,7 +8,7 @@
   "responseTimeout": 30000,
   "baseUrl": "https://extrusion-os.r-ecosystem.de",
   "viewportWidth": 1000,
-  "viewportHeight": 1200,
+  "viewportHeight": 1400,
   "reporter": "mochawesome",
   "reporterOptions": {
   "reportDir": "cypress/reports",
