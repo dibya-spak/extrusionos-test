@@ -24,6 +24,7 @@ describe('Testing material modal(create/edit/delete materials)',()=>
         cy.get('#recipe_material_antiblock').clear().type('200')
         cy.get('#recipe_material_slip').clear().type('100')
         cy.get('#recipe_material_mfi').clear().type('1000')
+        cy.log('save the material')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Material was successfully created.")
     }) 

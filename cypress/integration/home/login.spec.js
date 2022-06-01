@@ -1,4 +1,4 @@
-//Importing logintestdata json file
+//Importing login testdata json file
 const testData = require('../../fixtures/logintestdata.json')
 
 describe('User Login and Logout',()=>
@@ -15,7 +15,7 @@ describe('User Login and Logout',()=>
             username: row.username,
             password: row.password
         }
-    //it will generate the test name per each data
+    //generate the test name per each data
     context(`generate a test for ${data.username}`, () => 
    {
       it('verify the admin, viewer & manager login',() =>

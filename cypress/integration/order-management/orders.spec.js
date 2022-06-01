@@ -20,6 +20,7 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
         cy.get('div.ranges>ul>li').contains('Today').click()
         cy.get('#production_order_scheduled_quantity_m').clear({force:true}).type('20')
         cy.get('#production_order_scheduled_quantity_kg').clear().type('30')
+        cy.log('save the order')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully created.")
     }) 
@@ -27,17 +28,13 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
     {
        cy.visit('/production_orders')
        cy.log('click an order')
-    
-       // cy.xpath('//tr/td[1]').each(($el, index, $list) => {
-       //     const txt = $el.text()
-       //     if (txt.includes('Automate order')){
-       //         cy.xpath('//tr[1]/td[14]').click()
-       //     }
-       // })
        cy.xpath('//tbody/tr[1]').click()
+       cy.log('change the status')
        cy.get('#production_order_status').select('complete')
+       cy.log('set the actual time')
        cy.get('#actual_range').click()
        cy.get('div:nth-child(6)>div.ranges>ul>li').contains('Yesterday').click({force:true})
+       cy.log('save the order')
        cy.get('[type="submit"]').click()
        cy.get('div#toast-container').should('have.text',"Production order was successfully updated.")
    })
@@ -49,12 +46,6 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
         cy.xpath('//tbody/tr[1]/td[14]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
-        // cy.xpath('//tr/td[1]').each(($el, index, $list) => {
-        //     const txt = $el.text()
-        //     if (txt.includes('Automate order')){
-        //         cy.xpath('//tr[1]/td[14]').click()
-        //     }
-        // })
     })
   
     

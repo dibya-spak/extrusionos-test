@@ -15,6 +15,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
         cy.log('fill all the input fields')
         cy.get('#product_name').clear().type('Automate product')
         cy.get('#product_comment').clear().type('no comment')
+        cy.log('save product')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Product was successfully created.")
     }) 
@@ -34,10 +35,13 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
        cy.contains('Melt Pressure').click()
        cy.get('button.select-threshold-properties').click()
        cy.get('table>tbody>tr>td:nth-child(6)').type('200')
+       cy.log('adding material layer')
        cy.get('[data-association="material_layer"]').click()
+       cy.log('fill required fields for material layer')
        cy.xpath('(//select[@class="form-control select required"])[2]').should('not.be.empty')
        cy.xpath('(//select[@class="form-control select required"])[3]').should('not.be.empty')
        cy.get('input[type="number"]:nth-child(2)').clear().type('100')
+       cy.log('save recipe')
        cy.get('input[type="submit"]').click()
        cy.get('div#toast-container').should('have.text',"Production specification was successfully created.")
    })
@@ -45,9 +49,13 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
    it('verify the user can copy a recipe',() =>
    {
       cy.visit('/product_management/products')
+      cy.log('select product')
       cy.get('table>tbody>tr').contains('Automate product').click({force:true})
+      cy.log('click copy button of a recipe')
       cy.get('tbody>tr:nth-child(1)>td>a.copy-button').click()
+      cy.log('update comment')
       cy.get('#recipe_comment').clear().type('recipe copied')
+      cy.log('save copied recipe')
       cy.get('[value="Create production specification"]').click()
       cy.get('div#toast-container').should('have.text',"Production specification was successfully copied.")
       cy.contains('Back').click()
@@ -57,8 +65,11 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
    it('verify the user can copy a product',() =>
    {
       cy.visit('/product_management/products')
+      cy.log('click copy button of a product')
       cy.get('tbody>tr:nth-child(1)>td>a.copy-button').click()
+      cy.log('update comment')
       cy.get('#product_comment').clear().type('product copied')
+      cy.log('save copied product')
       cy.get('[value="Create Product"]').click()
       cy.get('div#toast-container').should('have.text',"Product was successfully copied.")
       cy.contains('Back').click()
@@ -68,6 +79,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
     it('verify the user can delete a product & the associated recipe',() =>
      {
         cy.visit('/product_management/products')
+        cy.log('select a product')
         cy.get('table>tbody>tr').contains('Automate product').click({force:true})
         cy.log('click delete button for a PS')
         cy.get('[data-title="Delete Production specification Automate recipe"]').click({force:true})

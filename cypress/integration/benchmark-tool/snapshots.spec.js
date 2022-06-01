@@ -7,12 +7,13 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
     })    
     it('verify the user can create a snapshot',() =>
      {
-        cy.log('click on create snapshot button')
+        cy.log('click on create snapshot button at top')
         cy.get('[href="/production_snapshots/new.js"]').click()
         cy.log('fill all the input fields')
         cy.get('#production_snapshot_name').clear().type('Automate snapshot')
         cy.get('#production_snapshot_asset_id').select('RF5')
         cy.get('#production_snapshot_comment').type('automatic comment')
+        cy.log('save snapshot')
         cy.get('[class="btn btn-primary"]').click()
         cy.get('div#toast-container').should('have.text',"Snapshot was created")
 
@@ -20,11 +21,13 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
 
     it('verify the user can edit a snapshot',() =>
      {
-        cy.log('naviagte benchmark tab') 
+        cy.log('naviagte snapshot tab') 
         cy.contains('Benchmark Tool').click()
         cy.get('[href="/production_snapshots"]').click()
+        cy.log('select a snapshot & edit the comment')
         cy.get('table>tbody>tr').contains('Automate snapshot').click()
         cy.get('#production_snapshot_comment').type('comment modified')
+        cy.log('save snapshot')
         cy.get('[class="btn btn-primary"]').click()
         cy.get('div#toast-container').should('have.text',"Production snapshot was successfully updated.")
 
