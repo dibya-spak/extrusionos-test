@@ -14,7 +14,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
         cy.log('adding a benchmark')
         cy.contains('Add Benchmark').click()
         cy.log('fill all the input fields')
-        cy.get('#asset_benchmark_asset_id').select('RF5')
+        cy.get('#asset_benchmark_asset_id').select('Reicofil')
         cy.get('#asset_benchmark_name').clear().type('automate benchmark')
         cy.get('#asset_benchmark_comments').clear().type('no comment')
         cy.log('click on create quick mode button')
@@ -100,6 +100,20 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
         })
 
     })
+    it('verify user can filter the act & set radio option in a benchmark',() =>
+     {
+        cy.visit('/asset_benchmarks')
+        cy.log('select a benchmark')
+        cy.get('table>tbody>tr').contains('automate benchmark').click()
+        cy.get('#selected_values_all').should('be.checked')
+        cy.get('#selected_values_act').should('not.be.checked').click()
+        cy.get('#selected_values_act').should('be.checked')
+        //cy.get('table>thead>tr:nth-child(2)').should('not.contain','Act value')
+        cy.get('#selected_values_set').should('not.be.checked').click()
+        cy.get('#selected_values_set').should('be.checked').click()
+
+    })
+
     it('verify the user can config the equipment properties in a benchmark',() =>
      {
         cy.visit('/asset_benchmarks')
@@ -157,7 +171,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
        cy.contains('Benchmark Tool').click()
        cy.get('[href="/asset_benchmarks/new"]').click()
        cy.log('fill all the input fields')
-       cy.get('#asset_benchmark_asset_id').select('RF5')
+       cy.get('#asset_benchmark_asset_id').select('Reicofil')
        cy.get('#asset_benchmark_name').clear().type('automate advance benchmark')
        cy.get('#asset_benchmark_comments').clear().type('no comment')
        cy.log('click creat advance mode')
@@ -182,7 +196,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
         cy.contains('Benchmark Tool').click()
         cy.get('[href="/asset_benchmarks/new"]').click()
         cy.log('fill all the input fields')
-        cy.get('#asset_benchmark_asset_id').select('RF5')
+        cy.get('#asset_benchmark_asset_id').select('Reicofil')
         cy.get('#asset_benchmark_name').clear().type('automate export benchmark')
         cy.get('#asset_benchmark_comments').clear().type('no comment')
         cy.log('save expert mode benchmark')
@@ -219,7 +233,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
   })
   
     
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })

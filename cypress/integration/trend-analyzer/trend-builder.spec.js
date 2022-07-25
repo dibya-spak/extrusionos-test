@@ -17,15 +17,27 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
         cy.get('#dashboard_description').clear().type('no description')
         cy.log('configure properties')
         cy.get('#select-equipment-properties').click()
-        cy.contains('Belt machine').click()
-        cy.contains('Line speed').click()
+        cy.get('#li_asset_1').click()
+        cy.contains('Belt Tension').click()
+        //cy.get('#li_equipment_2>ol>li:nth-child(1)').click()
         cy.get('#updateEquipmentFromSelectionButton').click()
         cy.log('save dashboard')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Dashboard was successfully created.")
     }) 
+
+    it('verify the user can edit a dashboard',() =>
+     {
+        cy.visit('/dashboards')
+        cy.log('click dashboard edit button')
+        cy.xpath('(//span[@title="Edit Dashboard"])[1]').click()
+        cy.get('#dashboard_description').clear().type('description updated')
+        cy.get('[type="submit"]').click()
+        cy.get('div#toast-container').should('have.text',"Dashboard was successfully updated.")
+
+    })
  
-    it('verify the user can delete a material',() =>
+    it('verify the user can delete a dashboard',() =>
      {
         cy.visit('/dashboards')
         cy.log('click dashboard delete button')
@@ -35,7 +47,6 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
 
     })
   
-    
     afterEach(function(){
         cy.logOut()
     })

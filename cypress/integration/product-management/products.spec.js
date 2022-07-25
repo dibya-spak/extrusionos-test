@@ -28,11 +28,11 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
        cy.get('div>a.btn-primary').click({force:true})
        cy.log('fill all the input fields')
        cy.get('#recipe_name').clear({force:true}).type('Automate recipe')
-       cy.get('select[name="recipe[asset_id]"]').select('RF5')
+       cy.get('select[name="recipe[asset_id]"]').select('Reicofil')
        cy.get('#recipe_comment').clear().type('automate comment')
        cy.log('adding threshold')
        cy.get('div>a.threshold-add-button').click()
-       cy.contains('Melt Pressure').click()
+       cy.contains('Line Speed').click()
        cy.get('button.select-threshold-properties').click()
        cy.get('table>tbody>tr>td:nth-child(6)').type('200')
        cy.log('adding material layer')
@@ -68,7 +68,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
       cy.log('click copy button of a product')
       cy.get('tbody>tr:nth-child(1)>td>a.copy-button').click()
       cy.log('update comment')
-      cy.get('#product_comment').clear().type('product copied')
+      cy.get('#product_name').clear().type('Automate product copied')
       cy.log('save copied product')
       cy.get('[value="Create Product"]').click()
       cy.get('div#toast-container').should('have.text',"Product was successfully copied.")
@@ -94,7 +94,17 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
         cy.get('div#toast-container').should('have.text',"Product was successfully destroyed.")
 
     })
-  
+    it('verify the user can delete the copied product',() =>
+    {
+       cy.visit('/product_management/products')
+       cy.log('click delete button of a product')
+       cy.get('tbody>tr:nth-child(1)>td>a.destroy-button').click()
+       cy.wait(2000)
+       cy.get('div>#options_confirm_string').type('DELETE')
+       cy.get('input.btn-danger').click()
+       cy.get('div#toast-container').should('have.text',"Product was successfully destroyed.")
+
+   })
     
     afterEach(function(){
         cy.logOut()

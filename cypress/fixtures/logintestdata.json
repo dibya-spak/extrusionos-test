@@ -6,11 +6,11 @@
       "password": "dibya123"
    },
    {
-      "username": "view@gmail.com",
+      "username": "view@localhost",
       "password": "view123"
    },
    {
-      "username": "man@gmail.com",
+      "username": "man@localhost",
       "password": "man123"
    }
 ]

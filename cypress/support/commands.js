@@ -9,13 +9,13 @@ Cypress.Commands.add('adminLogIn',() =>{
 })
 Cypress.Commands.add('managerLogIn',() =>{
     cy.visit("/",{timeout:60000})
-    cy.get('#user_email').clear().type('man@gmail.com')
+    cy.get('#user_email').clear().type('man@localhost')
     cy.get('#user_password').clear().type('man123')
     cy.get('input[value="Log in"]').click()
 })
 Cypress.Commands.add('viewerLogIn',() =>{
     cy.visit("/",{timeout:60000})
-    cy.get('#user_email').clear().type('view@gmail.com')
+    cy.get('#user_email').clear().type('view@localhost')
     cy.get('#user_password').clear().type('view123')
     cy.get('input[value="Log in"]').click()
 })

@@ -7,7 +7,7 @@ describe('Create/edit/delete user details',()=>
         cy.adminLogIn()
         })
 
-    it('verify creating admin user',() =>
+    it('verify creating an user as manager',() =>
      {
         cy.log('navigate user tab')
         cy.contains('Settings').click()
@@ -15,10 +15,11 @@ describe('Create/edit/delete user details',()=>
         cy.log('add new user')
         cy.get('[href="/users/new"]').click()
         cy.log('fill all the input fields')
-        cy.get('#user_first_name').clear().type('admin')
+        cy.get('#user_first_name').clear().type('manager')
         cy.get('#user_last_name').clear().type('user')
         cy.get('#user_email').clear().type('automate@localhost')
         cy.get('#user_role').contains('admin').should('be.visible')
+        cy.get('#user_role').select('manager')
         cy.get('#user_password').clear().type('admin123')
         cy.get('#user_password_confirmation').clear().type('admin123')
         cy.log('save user details')
@@ -32,7 +33,7 @@ describe('Create/edit/delete user details',()=>
         cy.log('click the 1st user in the list')
         cy.get('table>tbody>tr').contains('automate@localhost').click()
         cy.log('change user role')
-        cy.get('#user_role').select('manager')
+        cy.get('#user_role').select('viewer')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"User was successfully updated.")
     })

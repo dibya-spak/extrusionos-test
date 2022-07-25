@@ -11,7 +11,7 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
         cy.get('[href="/production_snapshots/new.js"]').click()
         cy.log('fill all the input fields')
         cy.get('#production_snapshot_name').clear().type('Automate snapshot')
-        cy.get('#production_snapshot_asset_id').select('RF5')
+        cy.get('#production_snapshot_asset_id').select('Reicofil')
         cy.get('#production_snapshot_comment').type('automatic comment')
         cy.log('save snapshot')
         cy.get('[class="btn btn-primary"]').click()
