@@ -12,8 +12,11 @@ describe('Testing production history modal',()=>
         cy.contains('Production Monitor').click()
         cy.get('[href="/production_overview/history"]').click() 
         cy.contains('Production history').should('be.visible')
+        cy.get('#asset_id').select('Reicofil')
+        cy.get('#range').click()
+        cy.contains('Last 7 Days').click()
         cy.log('validate production history table')
-        cy.get('thead>tr>th').should(($lis) => {
+        cy.get('#DataTables_Table_0>thead>tr>th').should(($lis) => {
             expect($lis).to.have.length(8)
             expect($lis.eq(0)).to.contain('Start')
             expect($lis.eq(1)).to.contain('End')
@@ -24,14 +27,20 @@ describe('Testing production history modal',()=>
             expect($lis.eq(6)).to.contain('Status')
           })
    })
-   it('verify user can filter the history by asset & time range',() =>
+   it('verify user can filter the history by asset & time range',{"scrollBehavior": false},() =>
     {
         cy.log('navigate live monitor tab')
         cy.visit('/production_overview/history')
         cy.get('#asset_id').select('Reicofil')
         cy.log('search & select an asset')
         cy.get('#range').click()
-        cy.contains('Last 30 Days').click()
+        cy.contains('Last 7 Days').click()
+        cy.get('[type="search"]').type('nodata')
+        cy.get('.dataTables_empty').should('have.text','No matching records found')
+        cy.get('[type="search"]').clear()
+        cy.get('#DataTables_Table_0>tbody>tr').should('have.length.greaterThan',1)
+
+
     })
   
    

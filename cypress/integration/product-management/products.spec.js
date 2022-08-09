@@ -45,7 +45,28 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
        cy.get('input[type="submit"]').click()
        cy.get('div#toast-container').should('have.text',"Production specification was successfully created.")
    })
-
+   it('verify the user can manage threshold groups in that recipe',{"scrollBehavior": false},() =>
+   {
+      cy.visit('/product_management/products')
+      cy.log('select product')
+      cy.get('table>tbody>tr').contains('Automate product').click({force:true})
+      cy.log('select a recipe')
+      cy.get('tbody>tr').click()
+      cy.get('#manage_threshold_groups').click()
+      cy.wait(1000)
+      cy.get('#add-threshold-group').click()
+      cy.log('type Tgroup name')
+      cy.xpath('(//input[@placeholder="Name"])[1]').clear().type('1st group')
+      cy.get('.save-threshold-groups').click()
+      cy.get('div#toast-container').should('have.text',"Threshold Groups were successfully updated.")
+    //   cy.xpath('(//span[@class="select2-selection select2-selection--multiple"])[1]').click()
+    //   cy.contains('1st group').click({force:true})
+      cy.get('#manage_threshold_groups').click()
+      cy.log('delete Tgroup')
+      cy.xpath('(//button[@class="btn btn-outline-danger btn-sm destroy-button"])[1]').click()
+      cy.get('.save-threshold-groups').click()
+      cy.get('div#toast-container').should('have.text',"Threshold Groups were successfully updated.")
+  })
    it('verify the user can copy a recipe',() =>
    {
       cy.visit('/product_management/products')
@@ -106,7 +127,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
 
    })
     
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })

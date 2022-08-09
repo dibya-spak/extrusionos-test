@@ -1,4 +1,4 @@
-describe.skip('Testing order management modal(create/edit/delete orders)',()=>
+describe('Testing order management modal(create/edit/delete orders)',()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -24,7 +24,18 @@ describe.skip('Testing order management modal(create/edit/delete orders)',()=>
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully created.")
     }) 
-    it('verify user can start this order on production overview modal ',() =>
+
+    it.skip('verify user can filter the order overview',() =>
+    {
+       cy.visit('/production_orders')
+       cy.get('#production_order_order_id').type('Automate order')
+       cy.get('tbody>tr>td:nth-child(1)').should('have.text','Automate order')
+       cy.get('#production_order_order_id').clear()
+       cy.get('tbody>tr').should('have.length.greaterThan', 1)
+ 
+   }) 
+
+    it('verify user can start & stop this order on production overview modal ',() =>
     {
         cy.log('click production overview button')
         cy.get('[title="Production overview"]').click()
@@ -65,6 +76,49 @@ describe.skip('Testing order management modal(create/edit/delete orders)',()=>
    })
  
     it('verify the user can delete an order',() =>
+     {
+        cy.visit('/production_orders')
+        cy.log('click delete button for an order')
+        cy.xpath('//tbody/tr[1]/td[15]').click()
+        cy.contains('Confirm').click()
+        cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
+    })
+    it('verify the user can import orders',() =>
+    {
+       cy.visit('/production_orders')
+       cy.log('click import button')
+       cy.get('[href="/upload_file"]').click()
+       cy.get('.upload-file').selectFile('cypress/fixtures/orders.csv')
+       cy.log('after uploading validate the file name')
+       cy.xpath('//label[@id="selected_file_name"]').should('have.text','orders.csv')
+       cy.get('[value="Preview"]').click()
+       cy.get('p.text-danger').should('contain','Some assets, products or production specifications could not be found in our system.')
+       cy.get('[value="Confirm"]').click()
+       cy.get('div#toast-container').should('have.text',"Production order was successfully created.")
+       cy.log('close the alert pop-up')
+       cy.xpath('(//a[@href="/production_orders"])[2]').click()
+    
+   })
+   it('verify the user can skip or replace the order during import ',() =>
+    {
+       cy.visit('/production_orders')
+       cy.log('click import button')
+       cy.get('[href="/upload_file"]').click()
+       cy.get('.upload-file').selectFile('cypress/fixtures/orders.csv')
+       cy.get('[value="Preview"]').click()
+       cy.get('[value="Confirm and Skip"]').click()
+       cy.get('div#toast-container').should('have.text',"Production order was no new records created")
+       cy.log('click import button')
+       cy.get('[href="/upload_file"]').click()
+       cy.get('.upload-file').selectFile('cypress/fixtures/orders.csv')
+       cy.get('[value="Preview"]').click()
+       cy.get('[value="Confirm and Replace"]').click()
+       cy.get('div#toast-container').should('have.text',"Production order was successfully created.")
+       cy.log('close the alert pop-up')
+       cy.xpath('(//a[@href="/production_orders"])[2]').click()
+    
+   })
+   it('verify user can delete that imported order',() =>
      {
         cy.visit('/production_orders')
         cy.log('click delete button for an order')

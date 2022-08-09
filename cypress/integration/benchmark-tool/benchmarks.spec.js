@@ -22,6 +22,15 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
         cy.get('div#toast-container').should('have.text',"Benchmark was successfully created.")
         cy.get('[value="Quick Mode (A to B)"]').should('be.visible')
     })
+    it('verify the search bar in the benchmark overview',() =>
+    {
+       cy.visit('/asset_benchmarks')
+       cy.get('[type="search"]').type('automate benchmark')
+       cy.get('tbody>tr>td:nth-child(1)').should('have.text','automate benchmark')
+       cy.get('[type="search"]').clear()
+       cy.get('tbody>tr').should('have.length.greaterThan', 1)
+ 
+   })
 
     it('verify the user can add columns to a benchmark',() =>
      {

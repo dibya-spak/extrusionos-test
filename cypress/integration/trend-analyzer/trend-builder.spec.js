@@ -36,6 +36,16 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
         cy.get('div#toast-container').should('have.text',"Dashboard was successfully updated.")
 
     })
+    it.skip('verify the user can view the dashboard',() =>
+     {
+        cy.visit('/dashboards')
+        cy.log('click dashboard edit button')
+        cy.xpath('(//span[@title="Show Dashboard"])[1]').click()
+        cy.get('[aria-label="Search dashboard by name"]').should('contain','Automate dashboard')
+        //cy.wait(10000)
+        //contains('Automate dashboard')
+
+    })
  
     it('verify the user can delete a dashboard',() =>
      {
@@ -47,7 +57,7 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
 
     })
   
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })

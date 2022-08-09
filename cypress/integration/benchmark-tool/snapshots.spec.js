@@ -17,7 +17,16 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
         cy.get('[class="btn btn-primary"]').click()
         cy.get('div#toast-container').should('have.text',"Snapshot was created")
 
-    }) 
+    })
+    it.skip('verify the search bar in the snapshot overview',() =>
+    {
+       cy.visit('/production_snapshots')
+       cy.get('[type="search"]').type('Automate snapshot')
+       cy.get('tbody>tr>td:nth-child(2)').should('have.text','Automate snapshot')
+       cy.get('[type="search"]').clear()
+       cy.get('tbody>tr').should('have.length.greaterThan', 1)
+ 
+   }) 
 
     it('verify the user can edit a snapshot',() =>
      {
