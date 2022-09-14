@@ -1,5 +1,5 @@
 
-describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
+describe('Testing custom dashboard modal(create/edit/delete dashboards)',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -17,33 +17,31 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',()=>
         cy.get('#dashboard_description').clear().type('no description')
         cy.log('configure properties')
         cy.get('#select-equipment-properties').click()
-        cy.get('#li_asset_1').click()
+        cy.get('[for="equipment_2"]').click()
         cy.contains('Belt Tension').click()
-        //cy.get('#li_equipment_2>ol>li:nth-child(1)').click()
-        cy.get('#updateEquipmentFromSelectionButton').click()
+        cy.get('#selector-modal-select-properties-button').click()
         cy.log('save dashboard')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Dashboard was successfully created.")
-    }) 
+    })
+    it('verify the user can view the dashboard',() =>
+    {
+       cy.visit('/dashboards')
+       cy.log('click dashboard edit button')
+       cy.get('[class="card-title-text"]').contains('Automate dashboard').click()
+       cy.url().should('contain', 'show_embedded')    
+
+   }) 
 
     it('verify the user can edit a dashboard',() =>
      {
         cy.visit('/dashboards')
         cy.log('click dashboard edit button')
-        cy.xpath('(//span[@title="Edit Dashboard"])[1]').click()
+        cy.xpath('(//div[@class="dropdown"])[1]').click()
+        cy.contains('Edit Dashboard').click()    
         cy.get('#dashboard_description').clear().type('description updated')
         cy.get('[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Dashboard was successfully updated.")
-
-    })
-    it.skip('verify the user can view the dashboard',() =>
-     {
-        cy.visit('/dashboards')
-        cy.log('click dashboard edit button')
-        cy.xpath('(//span[@title="Show Dashboard"])[1]').click()
-        cy.get('[aria-label="Search dashboard by name"]').should('contain','Automate dashboard')
-        //cy.wait(10000)
-        //contains('Automate dashboard')
 
     })
  

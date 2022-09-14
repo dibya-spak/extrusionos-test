@@ -57,7 +57,7 @@ describe('Testing Datasource modal(create/edit/delete datasource)',()=>
      {
         cy.visit('/data_sources')
         cy.log('click datasource delete button')
-        cy.get('[data-title="Delete Data source Automate camea datasource"]').click({force:true})
+        cy.get('[data-title="Delete Data source Automate camea datasource"]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Camea data source was successfully destroyed.")
     })

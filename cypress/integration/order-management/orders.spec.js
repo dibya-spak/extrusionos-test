@@ -25,16 +25,6 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
         cy.get('div#toast-container').should('have.text',"Production order was successfully created.")
     }) 
 
-    it.skip('verify user can filter the order overview',() =>
-    {
-       cy.visit('/production_orders')
-       cy.get('#production_order_order_id').type('Automate order')
-       cy.get('tbody>tr>td:nth-child(1)').should('have.text','Automate order')
-       cy.get('#production_order_order_id').clear()
-       cy.get('tbody>tr').should('have.length.greaterThan', 1)
- 
-   }) 
-
     it('verify user can start & stop this order on production overview modal ',() =>
     {
         cy.log('click production overview button')
@@ -61,6 +51,30 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
         cy.xpath('(//tbody/tr[1]/td[2])[1]').should('have.text',"complete")
 
    })
+   it('verify user can filter the order overview',() =>
+   {
+      cy.visit('/production_orders')
+      cy.get('#filters_search').type('Automate order')
+      cy.get('tbody>tr>td:nth-child(1)').should('have.text','Automate order')
+      cy.get('#filters_search').clear()
+      cy.get('tbody>tr').should('have.length.greaterThan', 1)
+      cy.get('#filters_asset').select('Reicofil')
+      cy.get('tbody>tr>td:nth-child(3)').invoke('text').should('match', /^Reicofil/)
+      cy.get('#production_order_status').select('complete')
+      cy.get('tbody>tr>td:nth-child(2)').invoke('text').should('match', /^complete/)
+      cy.get('#production_order_product').select('product1')
+      cy.get('tbody>tr>td:nth-child(4)').invoke('text').should('match', /^product1/)
+      cy.get('#scheduled_type').select('scheduled')
+      cy.get('tbody>tr>td:nth-child(6)').should('not.be.empty')  
+      cy.get('#time_range').click()
+      cy.get('div.ranges>ul>li').contains('Today').click()
+      cy.get('tbody>tr>td:nth-child(1)').should('contain','Automate order')
+      cy.get('#time_range').click()
+      cy.get('.cancelBtn').click()  
+      cy.get('#time_range').should('be.empty')
+    
+
+  }) 
 
     it('verify the user can edit an order',() =>
     {
@@ -79,7 +93,7 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
      {
         cy.visit('/production_orders')
         cy.log('click delete button for an order')
-        cy.xpath('//tbody/tr[1]/td[15]').click()
+        cy.xpath('//tbody/tr[1]/td[9]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
     })
@@ -122,13 +136,13 @@ describe('Testing order management modal(create/edit/delete orders)',()=>
      {
         cy.visit('/production_orders')
         cy.log('click delete button for an order')
-        cy.xpath('//tbody/tr[1]/td[15]').click()
+        cy.xpath('//tbody/tr[1]/td[9]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Production order was successfully destroyed.")
     })
   
     
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })

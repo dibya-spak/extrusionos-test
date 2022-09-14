@@ -1,5 +1,5 @@
 
-describe('Testing production history modal',()=>
+describe('Testing production history modal',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -9,9 +9,9 @@ describe('Testing production history modal',()=>
     it('verify user can navigate to production history tab & verify the table content',() =>
     {
         cy.log('navigate production history tab')
-        cy.contains('Production Monitor').click()
+        cy.contains('Machine Monitor').click()
         cy.get('[href="/production_overview/history"]').click() 
-        cy.contains('Production history').should('be.visible')
+        cy.contains('History').should('be.visible')
         cy.get('#asset_id').select('Reicofil')
         cy.get('#range').click()
         cy.contains('Last 7 Days').click()
@@ -27,7 +27,7 @@ describe('Testing production history modal',()=>
             expect($lis.eq(6)).to.contain('Status')
           })
    })
-   it('verify user can filter the history by asset & time range',{"scrollBehavior": false},() =>
+   it('verify user can filter the history by asset & time range',() =>
     {
         cy.log('navigate live monitor tab')
         cy.visit('/production_overview/history')

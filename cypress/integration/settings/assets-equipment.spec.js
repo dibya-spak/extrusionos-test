@@ -5,15 +5,15 @@ describe('Testing assets & equipments modal',()=>
         cy.adminLogIn()
         cy.wait(2000)
     })    
-    it('verify the user can add an asset',() =>
+    it('verify the user can add an asset',{"scrollBehavior": false},() =>
      {
         cy.contains('Settings').click()
         cy.contains('Assets & Equipment').click()
         cy.log('add a sheet asset')
-        cy.get('a#dropdownMenuLink').click()
+        cy.get('#addAssetAction').click()
         cy.get('div>a.dropdown-item:nth-child(3)').click()
         cy.log('select Extruder E')
-        cy.get('#equipment_groups_extrusion_csc_index_option_5_selected_template').select('Batch Dosing (CSC)')
+        cy.get('#equipment_groups_extrusion_csc_index_option_1_selected_template').select('Batch Dosing (CSC)')
         cy.log('click continue button twice')
         cy.get('[value="Continue"]').click({force:true})
         cy.get('[value="Continue"]').click({force:true})
@@ -21,6 +21,7 @@ describe('Testing assets & equipments modal',()=>
         cy.get('div#toast-container').should('have.text',"Asset created")
         cy.log('validate the new asset image')
         cy.get('img[src="/images/sheet.jpg"]').should('be.visible')
+        cy.get('footer').scrollIntoView()
         cy.contains('Back').click()
     }) 
     it('verify the user can edit the name/description of an asset',() =>
@@ -109,7 +110,7 @@ describe('Testing assets & equipments modal',()=>
     //     cy.get('input[type="submit"]').click()
     //     })
     
-    it('verify the user can delete an asset',() =>
+    it.skip('verify the user can delete an asset',() =>
      {
         cy.visit('/inventory_assets')
         cy.log('click delete button for an asset ')

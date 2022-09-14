@@ -1,5 +1,5 @@
 
-describe('Testing defect analyzer',()=>
+describe('Testing defect analyzer',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -10,9 +10,11 @@ describe('Testing defect analyzer',()=>
         cy.log('navigating defect analyzer tab')
         cy.get('[href="/roll_data_analyzer"]').click()
         cy.get('[href="/roll_data_analyzer/process_data_configuration.js"]').click()
-        cy.log('select any property')
-        cy.get('#li_asset_1>ol>li:nth-child(2)').click()
-        cy.get('#li_equipment_4>ol>li>label').click()
+        cy.wait(2000)
+        cy.log('click equipment')
+        cy.get('#li_asset_1>ol>li:nth-child(1)>label').click()
+        cy.log('click any property')
+        cy.get('#li_equipment_2>ol>li:nth-child(1)>label').click()
         cy.get('[value="Update Defects dashboard"]').click()
         cy.get('div#toast-container').should('have.text',"Defects dashboard was successfully updated.")
     }) 
@@ -56,7 +58,7 @@ describe('Testing defect analyzer',()=>
     {
        cy.log('navigating defect analyzer tab')
        cy.get('[href="/roll_data_analyzer"]').click()
-       cy.wait(2000)
+       cy.wait(5000)
        cy.log('disable the property')
        cy.get('li.selected-process-data>div:nth-child(1)').click()
        cy.get('li.selected-process-data>div:nth-child(1)').should('have.class','hidden-in-graph')
@@ -71,7 +73,7 @@ describe('Testing defect analyzer',()=>
        cy.get('li.selected-defect-data>div:nth-child(1)').should('not.have.class','hidden-in-graph')
 
    }) 
-   it('verify the user can select a specific time range',() =>
+   it.skip('verify the user can select a specific time range',() =>
     {
        cy.log('navigating defect analyzer tab')
        cy.get('[href="/roll_data_analyzer"]').click()

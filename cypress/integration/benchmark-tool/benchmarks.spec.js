@@ -150,7 +150,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
        cy.get('[class="text-underline"]').click()
        cy.wait(1000)
        cy.log('validate the new benchmark in the list')
-       cy.get('[class="card-title pt-4"]').should('contain',"Edit Benchmark 'new benchmark'")
+       cy.get('[class="header_title"]').should('contain',"Edit Benchmark 'new benchmark'")
 
 
    })

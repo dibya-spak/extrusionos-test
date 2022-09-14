@@ -1,34 +1,36 @@
 
-describe('Testing live monitor modal',()=>
+describe('Testing live monitor modal',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
         cy.wait(2000)
     })    
      
-    it('verify user can navigate to the live monitor tab by the selected asset from home page',() =>
+    it('verify user can navigate to the live monitor tab by selecting asset from home page',() =>
     {
         cy.log('select an asset in home page')
-        cy.get('.card-title').contains('Reicofil').click()
-        cy.contains('Production Monitor').should('be.visible') 
+        cy.get('.card-header').contains('Reicofil').click()
+        cy.contains('Machine Monitor').should('be.visible') 
         cy.log('validate the selected asset in live monitor tab')
         cy.get('#asset_id').contains('Reicofil').should('be.visible')
         cy.log('validate live monitor table')
         cy.get('thead>tr>th').should(($lis) => {
-            expect($lis).to.have.length(7)
+            expect($lis).to.have.length(9)
             expect($lis.eq(0)).to.contain('Equipment')
             expect($lis.eq(1)).to.contain('Property name')
             expect($lis.eq(2)).to.contain('Unit')
-            expect($lis.eq(3)).to.contain('Act value')
+            expect($lis.eq(3)).to.contain('Target')
             expect($lis.eq(4)).to.contain('Set point')
-            expect($lis.eq(5)).to.contain('Target')
-            expect($lis.eq(6)).to.contain('ThresholdGroup')
+            expect($lis.eq(5)).to.contain('Act value')
+            expect($lis.eq(6)).to.contain('Set vs act')
+            expect($lis.eq(7)).to.contain('Act vs target')
+            expect($lis.eq(8)).to.contain('ThresholdGroup')
           })
    })
    it('verify user can search & filter available option then clear it ',() =>
     {
         cy.log('navigate live monitor tab')
-        cy.contains('Production Monitor').click()
+        cy.contains(' Machine Monitor').click()
         cy.get('[href="/production_overview/compliance"]').click()
         cy.log('search & select an asset')
         cy.get('#select2-asset_id-container').click()

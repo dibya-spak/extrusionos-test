@@ -1,5 +1,5 @@
 
-describe('Testing production overview modal',()=>
+describe.skip('Testing production overview modal',()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
