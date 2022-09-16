@@ -1,5 +1,5 @@
 
-describe('Testing products & recipe modal(create/edit/delete products & recipe)',()=>
+describe('Testing products & recipe modal(create/edit/delete products & recipe)',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -45,7 +45,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
        cy.get('input[type="submit"]').click()
        cy.get('div#toast-container').should('have.text',"Production specification was successfully created.")
    })
-   it('verify the user can manage threshold groups in that recipe',{"scrollBehavior": false},() =>
+   it('verify the user can manage threshold groups in that recipe',() =>
    {
       cy.visit('/product_management/products')
       cy.log('select product')

@@ -1,11 +1,11 @@
 
-describe('Testing assets & equipments modal',()=>
+describe('Testing assets & equipments modal',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
         cy.wait(2000)
     })    
-    it('verify the user can add an asset',{"scrollBehavior": false},() =>
+    it('verify the user can add an asset',() =>
      {
         cy.contains('Settings').click()
         cy.contains('Assets & Equipment').click()
@@ -19,8 +19,8 @@ describe('Testing assets & equipments modal',()=>
         cy.get('[value="Continue"]').click({force:true})
         cy.get('#create_asset').click({force:true})
         cy.get('div#toast-container').should('have.text',"Asset created")
-        cy.log('validate the new asset image')
-        cy.get('img[src="/images/sheet.jpg"]').should('be.visible')
+        // cy.log('validate the new asset image')
+        // cy.get('img[src="/images/sheet.jpg"]').should('be.visible')
         cy.get('footer').scrollIntoView()
         cy.contains('Back').click()
     }) 
@@ -30,8 +30,9 @@ describe('Testing assets & equipments modal',()=>
         cy.log('select the 1st asset in the list')
         cy.get('Table>tbody>tr').contains('New Sheet').click()
         cy.log('update the name & description')
-        cy.get('input#asset_name').clear({force:true}).type('Automate sheet')
+        cy.get('input#asset_name').clear({force:true}).type('# Automate sheet')
         cy.get('input#asset_description').clear({force:true}).type('Automatic testing sheet asset')
+        cy.get('footer').scrollIntoView()
         cy.log('save asset')
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Asset was successfully updated.")
@@ -42,6 +43,7 @@ describe('Testing assets & equipments modal',()=>
        cy.visit('/inventory_assets')
        cy.log('select the 1st asset in the list')
        cy.get('tbody>tr:nth-child(1)').click()
+       cy.get('footer').scrollIntoView()
        cy.contains('Automated Mapping').click()
        cy.get('[value="Auto map and show results"]').should('be.disabled')
        cy.log('select a datasource')
@@ -98,17 +100,20 @@ describe('Testing assets & equipments modal',()=>
        cy.get('div#toast-container').should('have.text',"Equipment property was successfully updated.")
    })
 
-    // it('verify user can add an equipments to an asset',() =>
-    //  {
-    //     cy.visit('/inventory_assets')
-    //     cy.log('select an asset in the list')
-    //     cy.get('table>tbody>tr').contains('testing Sheet').click()
-    //     cy.get('span.custom-dropdown').click()
-    //     cy.get('input[type="search"]').type('Calander')
-    //     cy.get('input[type="search"]').type('{enter}')
-    //     cy.get('#equipment_name').should('have.text','New Calander').clear().type('automatic added')
-    //     cy.get('input[type="submit"]').click()
-    //     })
+    it('verify user can add an equipments to an asset',() =>
+     {
+        cy.visit('/inventory_assets')
+        cy.log('select an asset in the list')
+        cy.get('table>tbody>tr').contains('# Automate sheet').click()
+        cy.get('footer').scrollIntoView()
+        cy.get('span.custom-dropdown').click()
+        cy.get('[class="select2-search__field"]').type('Calender').type('{enter}')
+        //cy.get('input[type="search"]').type('{enter}')
+        //cy.scrollTo(500, 0)
+        cy.get('#equipment_name').should('have.value','New Calender (Sheet)').clear().type('automatic added')
+        cy.get('footer').scrollIntoView()
+        cy.get('input[type="submit"]').click({force:true})
+        })
     
     it.skip('verify the user can delete an asset',() =>
      {
@@ -119,7 +124,7 @@ describe('Testing assets & equipments modal',()=>
         cy.get('div#toast-container').should('have.text',"Asset was successfully destroyed.")
     })
 
-    afterEach(function(){
-        cy.logOut()
-    })
+    // afterEach(function(){
+    //     cy.logOut()
+    // })
 })

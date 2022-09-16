@@ -1,5 +1,5 @@
 
-describe('Testing Datasource modal(create/edit/delete datasource)',()=>
+describe('Testing Datasource modal(create/edit/delete datasource)',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
