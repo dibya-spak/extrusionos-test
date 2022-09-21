@@ -47,17 +47,48 @@ describe('Testing roll detection settings(create/edit/delete detection settings)
        cy.get('.btn-danger').click()
        cy.get('div#toast-container').should('have.text',"Roll was successfully destroyed.")
    })
-   it('verify the user can filter the roll overview list',{"scrollBehavior": false},() =>
+   it('verify the user can select a roll & verify the summary/properties tab',() =>
    {
       cy.visit('/rolls')
       cy.wait(1000)
       cy.log('select the time range')
-      cy.get('#time_range').click()
-      cy.get('.ranges>ul>li:nth-child(5)').click()
-      cy.get('#filters_asset').select('Reicofil')
-      cy.wait(2000)
-      cy.get('tbody>tr>td:nth-child(5)').invoke('text').should('match', /^Reicofil/)
+      cy.xpath('(//tbody/tr)[1]').click()
+      cy.get('div>p').should(($lis) => {
+        expect($lis).to.have.length(3)
+        expect($lis.eq(0)).to.contain('Asset')
+        expect($lis.eq(1)).to.contain('Start')
+        expect($lis.eq(2)).to.contain('End')
+      })
+      cy.get('div.col-3').should(($lis) => {
+        expect($lis).to.have.length(4)
+        expect($lis.eq(0)).to.contain('Runtime')
+        expect($lis.eq(1)).to.contain('Length')
+        expect($lis.eq(2)).to.contain('Power Consumption')
+        expect($lis.eq(3)).to.contain('Material Consumption')
+      })
+      cy.get('#property-tab').click()
+      cy.get('thead>tr>th').should(($lis) => {
+        expect($lis).to.have.length(8)
+        expect($lis.eq(0)).to.contain('Equipment')
+        expect($lis.eq(1)).to.contain('Property')
+        expect($lis.eq(2)).to.contain('Unit')
+        expect($lis.eq(3)).to.contain('Set Point')
+        expect($lis.eq(4)).to.contain('Act Avg')
+        expect($lis.eq(5)).to.contain('Act Min')
+        expect($lis.eq(6)).to.contain('Act Max')
+     })    
   })
+  it('verify the user can filter the roll overview list',{"scrollBehavior": false},() =>
+  {
+     cy.visit('/rolls')
+     cy.wait(1000)
+     cy.log('select the time range')
+     cy.get('#time_range').click()
+     cy.get('.ranges>ul>li:nth-child(5)').click()
+     cy.get('#filters_asset').select('Reicofil')
+     cy.wait(2000)
+     cy.get('tbody>tr>td:nth-child(5)').invoke('text').should('match', /^Reicofil/)
+ })
 
     it('verify the user can edit the roll detection setting',() =>
     {

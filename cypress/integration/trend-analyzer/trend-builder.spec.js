@@ -10,15 +10,16 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',{"scrol
         cy.log('navigate dashboards tab')
         cy.contains('Trend Analyzer').click()
         cy.contains('Trend builder').click()
-        cy.log('adding a dashboard')
+        cy.log('click add button')
         cy.get('[href="/dashboards/new"]').click()
         cy.log('fill all the input fields')
         cy.get('#dashboard_name').clear().type('Automate dashboard')
         cy.get('#dashboard_description').clear().type('no description')
-        cy.log('configure properties')
+        cy.log('click configure properties')
         cy.get('#select-equipment-properties').click()
         cy.get('[for="equipment_2"]').click()
         cy.contains('Belt Tension').click()
+        cy.log('save configure')
         cy.get('#selector-modal-select-properties-button').click()
         cy.log('save dashboard')
         cy.get('input[type="submit"]').click()
@@ -27,7 +28,7 @@ describe('Testing custom dashboard modal(create/edit/delete dashboards)',{"scrol
     it('verify the user can view the dashboard',() =>
     {
        cy.visit('/dashboards')
-       cy.log('click dashboard edit button')
+       cy.log('click a dashboard')
        cy.get('[class="card-title-text"]').contains('Automate dashboard').click()
        cy.url().should('contain', 'show_embedded')    
 

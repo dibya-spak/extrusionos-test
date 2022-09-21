@@ -1,14 +1,15 @@
 
-describe('Testing live monitor modal',{"scrollBehavior": false},()=>
+describe('Testing live monitor modal',()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
         cy.wait(2000)
     })    
      
-    it('verify user can navigate to the live monitor tab by selecting asset from home page',() =>
+    it('verify user can navigate to the live monitor tab by selecting asset from home page',{"scrollBehavior": false},() =>
     {
         cy.log('select an asset in home page')
+        cy.scrollTo('bottom')
         cy.get('.card-header').contains('Reicofil').click()
         cy.contains('Machine Monitor').should('be.visible') 
         cy.log('validate the selected asset in live monitor tab')
