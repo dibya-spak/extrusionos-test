@@ -111,6 +111,7 @@ describe('Testing products & recipe modal(create/edit/delete products & recipe)'
         cy.get('tbody>tr:nth-child(1)>td>a.destroy-button').click()
         cy.wait(2000)
         cy.get('div>#options_confirm_string').type('DELETE')
+        cy.log('click delete button')
         cy.get('input.btn-danger').click()
         cy.get('div#toast-container').should('have.text',"Product was successfully destroyed.")
 

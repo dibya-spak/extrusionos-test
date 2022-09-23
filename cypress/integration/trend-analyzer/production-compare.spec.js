@@ -47,7 +47,9 @@ describe('Testing production comparisons modal(create/edit/delete dashboards)',{
         cy.log('click dashboard edit button')
         cy.xpath('(//div[@class="dropdown"])[1]').click()
         cy.contains('Edit comparison').click()
+        cy.log('edit description')
         cy.get('#production_comparison_description').clear().type('description updated')
+        cy.log('save modal')
         cy.get('[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Production comparison was successfully updated.")
 
