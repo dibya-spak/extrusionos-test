@@ -45,6 +45,15 @@ describe('Create/edit/delete user details',()=>
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"User was successfully destroyed.")
     })
+    it('verify user can navigate to the profile details & update it',() =>
+    {
+       cy.log('click profile button')
+       cy.get('div:nth-child(2)>ul>li:nth-child(3)').click()
+       cy.get('[href="/users/3/edit"]').click()
+       cy.get('[class="header_title"]').should('have.text',"Editing User 3")
+       cy.get('input[type="submit"]').click()
+       cy.get('div#toast-container').should('have.text',"Your Profile was successfully updated.")
+   })
 
         afterEach(function(){
         cy.logOut()

@@ -26,8 +26,9 @@ describe('User Login and Logout',()=>
         cy.log('click login button')
         cy.get('input[value="Log in"]').click()
         cy.get('div#toast-container').should('have.text',"Signed in successfully.")
-        cy.log('click logout button')
-        cy.get('[href="/users/sign_out"]').click({force:true})
+        cy.log('click profile button')
+        cy.get('div:nth-child(2)>ul>li:nth-child(3)').click()
+        cy.get('[href="/users/sign_out"]').click()
         cy.get('div#toast-container').should('have.text',"Signed out successfully.")   
      })})})
 

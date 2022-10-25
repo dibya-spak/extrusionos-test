@@ -28,6 +28,20 @@ describe('Testing material modal(create/edit/delete materials)',()=>
         cy.get('input[type="submit"]').click()
         cy.get('div#toast-container').should('have.text',"Material was successfully created.")
     }) 
+
+    it('verify the user can edit a material',() =>
+    {
+       cy.visit('/product_management/materials')
+       cy.log('select one material from the overview')
+       cy.get('tbody>tr').contains('Automate material').click()
+       cy.log('update material type')
+       cy.get('#recipe_material_material_type').should('have.value','automatic')
+       .clear().type('type updated')
+       cy.log('save the modal')
+       cy.get('input[type="submit"]').click()
+       cy.get('div#toast-container').should('have.text',"Material was successfully updated.")
+
+   })
  
     it('verify the user can delete a material',() =>
      {

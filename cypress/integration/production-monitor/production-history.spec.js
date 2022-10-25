@@ -39,7 +39,7 @@ describe('Testing production history modal',{"scrollBehavior": false},()=>
         cy.get('[type="search"]').type('nodata')
         cy.get('.dataTables_empty').should('have.text','No matching records found')
         cy.get('[type="search"]').clear()
-        cy.get('#DataTables_Table_0>tbody>tr').should('have.length.greaterThan',1)
+        cy.get('#DataTables_Table_1>tbody>tr').should('have.length.greaterThan',1)
 
 
     })

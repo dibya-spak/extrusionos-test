@@ -75,8 +75,8 @@ describe('Testing assets & equipments modal',{"scrollBehavior": false},()=>
         cy.contains('Use selected data series').click()
         cy.wait(1000)
         //cy.get('h6.mb-3').contains('BF Simulation').should('be.visible')
-        cy.get('[value="Update Equipment property"]').click()
-        cy.get('div#toast-container').should('have.text',"Equipment property was successfully updated.")
+        cy.get('[value="Update Equipment Property"]').click()
+        cy.get('div#toast-container').should('have.text',"Equipment Property was successfully updated.")
     })
 
     it('verify the user can unmap an equipment properties',() =>
@@ -96,8 +96,8 @@ describe('Testing assets & equipments modal',{"scrollBehavior": false},()=>
        cy.wait(1000)
        cy.contains('Confirm').click()
        cy.get('div#toast-container').should('have.text',"Equipment property mapping was successfully destroyed.")
-       cy.get('[value="Update Equipment property"]').click()
-       cy.get('div#toast-container').should('have.text',"Equipment property was successfully updated.")
+       cy.get('[value="Update Equipment Property"]').click()
+       cy.get('div#toast-container').should('have.text',"Equipment Property was successfully updated.")
    })
 
     it('verify user can add an equipments to an asset',() =>

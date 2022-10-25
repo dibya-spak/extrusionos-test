@@ -1,5 +1,5 @@
 
-describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
+describe('Testing snapshot modal(create/edit/delete snapshots)',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -12,17 +12,11 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
         cy.log('fill all the input fields')
         cy.get('#production_snapshot_asset_id').select('Reicofil')
         cy.get('#submit').click()
-        cy.get('thead>tr>th').should(($lis) => {
-            expect($lis).to.have.length(7)
-            expect($lis.eq(0)).to.contain('Equipment')
-            expect($lis.eq(1)).to.contain('Property name')
-            expect($lis.eq(2)).to.contain('Unit')
-            expect($lis.eq(3)).to.contain('Act value')
-            expect($lis.eq(4)).to.contain('Set point')
-            expect($lis.eq(5)).to.contain('Target')
-            expect($lis.eq(6)).to.contain('ThresholdGroup')
-          })
-        cy.log('save snapshot')
+        const listitems = ['Equipment','Property Name','Unit','Act Value', 'Set Point','Target','ThresholdGroup']
+        cy.get('thead>tr>th').should('have.length', 7).each(($ele, i) => {
+            expect($ele).to.have.text(listitems[i])
+        })
+        cy.log('click next')
         cy.get('#next').click()
         cy.get('#production_snapshot_name').clear().type('Automate snapshot')
         cy.get('#production_snapshot_comment').clear().type('Automatic description')
@@ -30,41 +24,39 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
         cy.get('div#toast-container').should('have.text',"Snapshot was created")
 
     })
-    it.skip('verify the search bar in the snapshot overview',() =>
+    it('verify the search bar in the snapshot overview',() =>
     {
        cy.visit('/production_snapshots')
-       cy.get('[type="search"]').type('Automate snapshot')
+       cy.get('#filters_search').type('Automate snapshot')
+       cy.wait(1000)
        cy.get('tbody>tr>td:nth-child(2)').should('have.text','Automate snapshot')
-       cy.get('[type="search"]').clear()
+       cy.get('#filters_search').clear()
        cy.get('tbody>tr').should('have.length.greaterThan', 1)
  
    }) 
 
-    it('verify the user can navigate to snapshot details page',() =>
+    it('verify the user can navigate to snapshot details page & validate the contains',() =>
      {
         cy.log('naviagte snapshot tab') 
-        cy.contains('Benchmark Tool').click()
+        cy.contains('Machine Monitor').click()
         cy.get('[href="/production_snapshots"]').click()
+        cy.log('increase the row')
         cy.get('[name="snapshots_datatable_length"]').select('100')
         cy.log('select a snapshot')
         cy.get('table>tbody>tr').contains('Automate snapshot').click()
-        cy.get('.header_title').should('have.text','Automate snapshot')
-        cy.get('thead>tr>th').should(($lis) => {
-            expect($lis).to.have.length(9)
-            expect($lis.eq(1)).to.contain('Equipment')
-            expect($lis.eq(2)).to.contain('Equipment property')
-            expect($lis.eq(3)).to.contain('Display unit')
-            expect($lis.eq(4)).to.contain('Act value')
-            expect($lis.eq(5)).to.contain('Set point')
-            expect($lis.eq(6)).to.contain('Set vs act')
-            expect($lis.eq(7)).to.contain('Target value')
-            expect($lis.eq(8)).to.contain('Threshold groups')
-          })
-        cy.get('[type="search"]').type('fghg')
+        cy.get('.header_title').should('have.text','Snapshot: Automate snapshot')
+        const listitems = ['','Equipment','Equipment Property','Display Unit','Act Value', 'Set Point','Act vs. Set','Target Value','Threshold Groups']
+        cy.get('thead>tr>th').each(($ele, i) => {
+            //cy.log("====",$ele.text())
+            expect($ele).to.have.text(listitems[i])
+        })
+        cy.log('search by name')
+        cy.get('#snapshot_details_filter').type('fghg')
         cy.get('.dataTables_empty').should('have.text',"No matching records found")
-        cy.get('[type="search"]').clear()
+        cy.get('#snapshot_details_filter').clear()
         cy.get('tbody>tr').should('have.length.greaterThan', 1)
-        cy.xpath('(//*[@href="/production_snapshots"])[2]').click()
+        cy.log('click snapshot navigation')
+        cy.get('.item-2').click()
         cy.get('.header_title').should('have.text',"Snapshots")
 
     })
@@ -72,11 +64,12 @@ describe('Testing snapshot modal(create/edit/delete snapshots)',()=>
     it('verify the user can delete a snapshot',() =>
      {
         cy.visit('/production_snapshots')
+        cy.log('increase the row')
         cy.get('[name="snapshots_datatable_length"]').select('100')
         cy.log('click delete button for a snapshot')
-        cy.get('[data-title="Delete Production snapshot Automate snapshot"]').click()
+        cy.get('[data-title="Delete Snapshot Automate snapshot"]').click()
         cy.contains('Confirm').click()
-        cy.get('div#toast-container').should('have.text',"Production snapshot was successfully destroyed.")
+        cy.get('div#toast-container').should('have.text',"Snapshot was successfully destroyed.")
 
     })
   

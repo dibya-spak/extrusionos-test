@@ -21,5 +21,6 @@ Cypress.Commands.add('viewerLogIn',() =>{
 })
 
 Cypress.Commands.add('logOut',() =>{
+    cy.get('div:nth-child(2)>ul>li:nth-child(3)').click()
     cy.get('[href="/users/sign_out"]').click({force:true})
 })

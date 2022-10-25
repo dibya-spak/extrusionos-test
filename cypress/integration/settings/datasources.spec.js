@@ -57,7 +57,7 @@ describe('Testing Datasource modal(create/edit/delete datasource)',{"scrollBehav
      {
         cy.visit('/data_sources')
         cy.log('click datasource delete button')
-        cy.get('[data-title="Delete Data source Automate camea datasource"]').click()
+        cy.get('[data-title="Delete Data Source Automate camea datasource"]').click()
         cy.contains('Confirm').click()
         cy.get('div#toast-container').should('have.text',"Camea data source was successfully destroyed.")
     })
@@ -66,7 +66,7 @@ describe('Testing Datasource modal(create/edit/delete datasource)',{"scrollBehav
        cy.visit('/data_sources')
        cy.log('adding opc ua datasource')
        cy.get('#addDataSourceAction').click()
-       cy.contains('Add OPC UA data source').click()
+       cy.contains('Add OPC UA Data Source').click()
        cy.log('fill all the input fields')
        cy.get('#opc_ua_data_source_data_source_attributes_name').clear().type('Automate opcua datasource')
        cy.get('#opc_ua_data_source_data_source_attributes_description').clear().type('no description')
@@ -74,16 +74,16 @@ describe('Testing Datasource modal(create/edit/delete datasource)',{"scrollBehav
        cy.get('#opc_ua_data_source_collection_interval_ms').clear().type('200')
        cy.log('save the datasource')
        cy.get('input[type="submit"]').click()
-       cy.get('div#toast-container').should('have.text',"OPC UA data source was successfully created.")
+       cy.get('div#toast-container').should('have.text',"OPC UA Data Source was successfully created.")
    })
 
    it('verify the user can delete a OPC UA datasource',() =>
      {
         cy.visit('/data_sources')
         cy.log('click datasource delete button')
-        cy.get('[data-title="Delete Data source Automate opcua datasource"]').click({force:true})
+        cy.get('[data-title="Delete Data Source Automate opcua datasource"]').click({force:true})
         cy.contains('Confirm').click()
-        cy.get('div#toast-container').should('have.text',"OPC UA data source was successfully destroyed.")
+        cy.get('div#toast-container').should('have.text',"OPC UA Data Source was successfully destroyed.")
     })
     
     afterEach(function(){

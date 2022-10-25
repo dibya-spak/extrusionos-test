@@ -1,6 +1,6 @@
 
 
-describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
+describe('Testing benchmark modal(create/edit/delete benchmarks)',{"scrollBehavior": false},()=>
 {
     beforeEach(function(){
         cy.adminLogIn()
@@ -9,7 +9,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
     it('verify the user can add a quick mode benchmark',() =>
      {
         cy.log('navigate benchmarks tab')
-        cy.contains('Benchmark Tool').click()
+        cy.contains('Benchmarking Tool').click()
         cy.contains('Benchmarks').click()
         cy.log('adding a benchmark')
         cy.contains('Add Benchmark').click()
@@ -177,7 +177,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
     it('verify the user can redirect to the create benchmark modal & add an advance mode benchmark',() =>
     {
        cy.log('navigate benchmarks tab')
-       cy.contains('Benchmark Tool').click()
+       cy.contains('Benchmarking Tool').click()
        cy.get('[href="/asset_benchmarks/new"]').click()
        cy.log('fill all the input fields')
        cy.get('#asset_benchmark_asset_id').select('Reicofil')
@@ -201,9 +201,7 @@ describe('Testing benchmark modal(create/edit/delete benchmarks)',()=>
     })
     it('verify the user can add an expert mode benchmark',() =>
      {
-        cy.log('navigate benchmarks tab')
-        cy.contains('Benchmark Tool').click()
-        cy.get('[href="/asset_benchmarks/new"]').click()
+        cy.visit('/asset_benchmarks/new')
         cy.log('fill all the input fields')
         cy.get('#asset_benchmark_asset_id').select('Reicofil')
         cy.get('#asset_benchmark_name').clear().type('automate export benchmark')
